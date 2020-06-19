@@ -47,15 +47,15 @@ namespace CSharpStudy.Day20200620
             Assembly assembly = Assembly.GetEntryAssembly();
             Type type = assembly.GetType(classFullName);
             object obj = Activator.CreateInstance(type);
-            DeleteDirectoryInFiles(path, obj as ITaskCompleted);
+            DeleteDirectoryInFiles(path, obj as ITask);
         }
 
-        private static void DeleteDirectoryInFiles(string directory, ITaskCompleted taskCompleted)
+        private static void DeleteDirectoryInFiles(string directory, ITask task)
         {
             foreach (string path in Directory.GetFiles(directory))
             {
                 File.Delete(path);
-                taskCompleted.Completed(path);
+                task.Work(path);
             }
         }
     }

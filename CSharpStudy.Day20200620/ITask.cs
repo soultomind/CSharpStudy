@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace CSharpStudy.Day20200620
 {
-    interface ITaskCompleted
+    interface ITask
     {
-        void Completed(object arg);
+        void Start();
+        void Work(object arg);
+        void Finish();
     }
 }

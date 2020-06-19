@@ -46,8 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileDeleteCompleted.cs" />
-    <Compile Include="ITaskCompleted.cs" />
+    <Compile Include="DeleteFileTask.cs" />
+    <Compile Include="ITask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
