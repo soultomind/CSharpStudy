@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -44,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileDeleteCompleted.cs" />
-    <Compile Include="IOnCompleted.cs" />
+    <Compile Include="ITaskCompleted.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

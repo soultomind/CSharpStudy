@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace CSharpStudy.Day20200620
 {
-    class FileDeleteCompleted : IOnCompleted
+    class FileDeleteCompleted : ITaskCompleted
     {
         public void Completed(object arg)
         {
-            string directory = arg as string;
-            Console.WriteLine(String.Format("{0} 디렉토리 안에 파일에 대한 삭제가 완료되었습니다.", directory));
+            string path = arg as string;
+            Console.WriteLine(String.Format("{0} 파일 삭제.", path));
         }
     }
 }

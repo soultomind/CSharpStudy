@@ -19,11 +19,15 @@ namespace CSharpStudy.Day20200620
             Console.WriteLine(ex.ToString());
         }
 
+        [STAThread]
         static void Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             InterfaceCallback();
+
+            Console.WriteLine("Press any key to continue ...");
+            Console.ReadLine();
         }
 
         private static void CheckedAndUnChecked()
@@ -37,23 +41,22 @@ namespace CSharpStudy.Day20200620
 
         private static void InterfaceCallback()
         {
-            string path = @"C:\Temp1\Program.exe";
+            string path = @"C:\Temp1";
             string classFullName = ConfigurationManager.AppSettings["ClassFullName"];
 
             Assembly assembly = Assembly.GetEntryAssembly();
             Type type = assembly.GetType(classFullName);
             object obj = Activator.CreateInstance(type);
-            DeleteFile(path, (IOnCompleted)obj);
+            DeleteDirectoryInFiles(path, obj as ITaskCompleted);
         }
 
-        private static void DeleteFile(string path, IOnCompleted onCompleted)
+        private static void DeleteDirectoryInFiles(string directory, ITaskCompleted taskCompleted)
         {
-            Thread thread = new Thread(()=>
+            foreach (string path in Directory.GetFiles(directory))
             {
                 File.Delete(path);
-                onCompleted.Completed(path);
-            });
-            thread.Start();
+                taskCompleted.Completed(path);
+            }
         }
     }
 }

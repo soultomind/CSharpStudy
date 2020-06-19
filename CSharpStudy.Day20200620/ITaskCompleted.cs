@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CSharpStudy.Day20200620
 {
-    interface IOnCompleted
+    interface ITaskCompleted
     {
         void Completed(object arg);
     }
