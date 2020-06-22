@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpStudy.Day20200627", "CSharpStudy.Day20200627\CSharpStudy.Day20200627.csproj", "{5E43781D-5B96-44D7-AD8A-B38163F3F789}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{321EBFBC-9F05-4126-9F30-6A8725D6920B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{321EBFBC-9F05-4126-9F30-6A8725D6920B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{321EBFBC-9F05-4126-9F30-6A8725D6920B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E43781D-5B96-44D7-AD8A-B38163F3F789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E43781D-5B96-44D7-AD8A-B38163F3F789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E43781D-5B96-44D7-AD8A-B38163F3F789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E43781D-5B96-44D7-AD8A-B38163F3F789}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
