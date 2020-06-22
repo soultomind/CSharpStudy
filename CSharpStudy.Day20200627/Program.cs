@@ -35,10 +35,10 @@ namespace CSharpStudy.Day20200627
             DateTime utcNow = DateTime.UtcNow;
             Console.WriteLine(now.ToString("yyyy-MM-dd HH:mm:ss"));
 
-            Console.WriteLine("1년중 {0}일이 지나가고 있습니다.", now.DayOfYear);
-            Console.WriteLine("오늘은 {0}.", now.DayOfWeek);
+            Console.WriteLine("Now.DayOfYear={0}", now.DayOfYear);
+            Console.WriteLine("Now.DayOfWeek={0}.", now.DayOfWeek);
 
-            Console.WriteLine("다음주 스터디는 {0}일 입니다.", now.AddDays(7));
+            Console.WriteLine("Now.AddDays(7)={0}", now.AddDays(7));
             foreach (string fileName in Directory.GetFiles("C:\\Temp1"))
             {
                 FileInfo fi = new FileInfo(fileName);
@@ -51,7 +51,7 @@ namespace CSharpStudy.Day20200627
                 if (time.TotalMinutes > 5)
                 {
                     fi.Delete();
-                    Console.WriteLine("{0} 파일이 삭제되었습니다.", fi.Name);
+                    Console.WriteLine("{0} Delete File.", fi.Name);
                 }
             }
 
@@ -65,7 +65,7 @@ namespace CSharpStudy.Day20200627
             Console.WriteLine("DateTime.Now={0}, Kind={1}", now, now.Kind);
 
             TimeSpan gap = new DateTime(now.Year, 12, 31) - now;
-            Console.WriteLine("올해 몇일이 남았나요?={0}", (int)gap.TotalDays);
+            Console.WriteLine("Gap.TotalDays={0}", (int)gap.TotalDays);
             Console.WriteLine("Now.DayOfYear + Gap.Totaldays = {0}", now.DayOfYear + (int)gap.TotalDays);
         }
 
@@ -86,7 +86,7 @@ namespace CSharpStudy.Day20200627
             Console.WriteLine("ColorUtility.ToCssRgba(\"rgba(255, 0, 0, 0\")={0}", argb);
 
             string studyName = "C# Study";
-            if (studyName.IndexOf("") != -1)
+            if (studyName.IndexOf(" ") != -1)
             {
                 Console.WriteLine("Study!");
             }
