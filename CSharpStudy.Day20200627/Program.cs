@@ -18,7 +18,7 @@ namespace CSharpStudy.Day20200627
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            ExamString();
+            ExamEncoding();
             Thread.Sleep(1500);
 
             sw.Stop();
@@ -71,6 +71,13 @@ namespace CSharpStudy.Day20200627
 
         private static void ExamString()
         {
+            Console.WriteLine("###################### String");
+            // String 타입은 불변 객체 이기 때문에 모든 변환은 새로운 메모리 할당을 발생
+            string word = "c#";
+            Console.WriteLine("Word HashCode={0}", word.GetHashCode());
+            Console.WriteLine("Word.ToLower() HashCode={0}", word.ToLower().GetHashCode());
+            Console.WriteLine("Word.ToUpper() HashCode={0}", word.ToUpper().GetHashCode());
+
             // Alpha, Red, Green, Blue
 
             // 8비트 8자리 1,2,4,8,16,32,64,128=255 값으로 ARGB 의 값을 Int 형으로 표현 할 수 있다.
@@ -98,18 +105,41 @@ namespace CSharpStudy.Day20200627
             string message = String.Format("{0} {1}", "C#", "Study");
             Console.WriteLine(message);
 
-            // String 타입은 불변 객체 이기 때문에 모든 변환은 새로운 메모리 할당을 발생
+            string format = "날짜: {0,-20:D}, 판매 수량: {1,15:N}";
+            Console.WriteLine(format, DateTime.Now, 267);
+            Console.WriteLine("###################### String");
 
+            Console.WriteLine();
+            Console.WriteLine("###################### StringBuilder");
             // Capacity는 기존 Capacity 만큼의 문자열이 찰 경우 해당 크기의 두 배로!
             StringBuilder builder = new StringBuilder();
             Console.WriteLine("Capacity={0}", builder.MaxCapacity);
             Console.WriteLine("Capacity={0}, Length={1}", builder.Capacity, builder.Length);
-            builder.Append("ABCDEFGHIJKLMNOP");
+
+            // Append로 리턴되는 객체또한 자기자신 This 
+            StringBuilder builderA = builder.Append("ABCDEFGHIJKLMNOP");
+            Console.WriteLine("builderA={0}, builder={1}", builder.GetHashCode(), builderA.GetHashCode());
             Console.WriteLine("Capacity={0}, Length={1}", builder.Capacity, builder.Length);
             builder.Append("Q");
             Console.WriteLine("Capacity={0}, Length={1}", builder.Capacity, builder.Length);
             builder.Append(builder.ToString());
             Console.WriteLine("Capacity={0}, Length={1}", builder.Capacity, builder.Length);
+            Console.WriteLine("###################### StringBuilder");
+        }
+
+        private static void ExamEncoding()
+        {
+            Console.WriteLine("Encoding.Default={0}", Encoding.Default);
+            foreach (EncodingInfo encodingInfo in Encoding.GetEncodings())
+            {
+                Console.WriteLine("EncodingInfo Name={0}, CodePage={1}", encodingInfo.Name, encodingInfo.CodePage);
+            }
+
+            string json = "{event:\"execute\"}";
+            string encode = ConvertUtility.Base64Encode(json);
+            Console.WriteLine(encode);
+            string decode = ConvertUtility.Base64Decode(encode);
+            Console.WriteLine(decode);
         }
     }
 }
