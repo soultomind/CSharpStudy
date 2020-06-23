@@ -18,7 +18,7 @@ namespace CSharpStudy.Day20200627
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            ExamEncoding();
+            ExamBitCoverter();
             Thread.Sleep(1500);
 
             sw.Stop();
@@ -89,7 +89,7 @@ namespace CSharpStudy.Day20200627
             Console.WriteLine(color.ToString());
             Console.WriteLine("Color.ToArgb()={0}", color.ToArgb());
 
-            argb = ColorUtility.ToCssRgba("rgba(255, 0, 0, 0)");
+            argb = ColorUtility.ToCssStyleRgbaNumber("rgba(255, 0, 0, 0)");
             Console.WriteLine("ColorUtility.ToCssRgba(\"rgba(255, 0, 0, 0\")={0}", argb);
 
             string studyName = "C# Study";
@@ -140,6 +140,60 @@ namespace CSharpStudy.Day20200627
             Console.WriteLine(encode);
             string decode = ConvertUtility.Base64Decode(encode);
             Console.WriteLine(decode);
+        }
+
+        private static void ExamRegularExpression()
+        {
+            Console.WriteLine("ColorUtility.IsValidCssStyleRgba(\"#336655\")={0}", 
+                ColorUtility.IsValidCssStyleSharpRgba("#336655"));
+            Console.WriteLine("ColorUtility.IsValidCssStyleRgba(\"#336655FF\")={0}",
+                ColorUtility.IsValidCssStyleSharpRgba("#336655FF"));
+            Console.WriteLine("ColorUtility.IsValidCssStyleRgba(\"#336655FG\")={0}",
+                ColorUtility.IsValidCssStyleSharpRgba("#336655FG"));
+        }
+
+        private static void PrintBytes(ref byte[] bytes)
+        {
+            foreach (byte @byte in bytes)
+            {
+                Console.Write(@byte);
+            }
+        }
+        private static void ExamBitCoverter()
+        {
+            // 문자열 또한 byte 데이터이다.
+            byte[] bytes = 
+                new byte[] {
+                    67,
+                    (byte)'#',
+                    (byte)' ', (byte)'S', (byte)'t', (byte)'u', (byte)'d', (byte)'y' };
+
+            foreach (byte @byte in bytes)
+            {
+                Console.Write((char)@byte);
+            }
+            Console.WriteLine("");
+
+            Console.WriteLine("BitConverter.IsLittleEndian={0}", BitConverter.IsLittleEndian);
+
+            byte[] boolBytes = BitConverter.GetBytes(true);
+            byte[] shortBytes = BitConverter.GetBytes((short)32);
+            byte[] intBytes = BitConverter.GetBytes(32);
+
+            PrintBytes(ref boolBytes); Console.WriteLine(" BoolBytes={0}", BitConverter.ToString(boolBytes));
+            PrintBytes(ref shortBytes); Console.WriteLine(" ShortBytes={0}", BitConverter.ToString(shortBytes));
+            PrintBytes(ref intBytes); Console.WriteLine(" IntBytes={0}", BitConverter.ToString(intBytes));
+            // 1바이트는 8비트(00000000) 2바이트(00000000 00000000)
+
+            Console.WriteLine(Convert.ToString(32, 2));
+
+            string value = BitConverter.ToString(intBytes).Replace("-", "");
+            int nTemp = Convert.ToInt32(value, 16);
+            value = Convert.ToString(nTemp, 2);
+            Console.WriteLine("Length={0}, {1}", value.Length, value);
+
+            // 소켓 패킷 정의시 데이터에 대한 길이 설정 가능값
+            Console.WriteLine(32000.ToString("D10"));
         }
     }
 }
