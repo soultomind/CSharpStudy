@@ -14,20 +14,13 @@ namespace CSharpStudy.Day20200627
     {
         static void Main(string[] args)
         {
-            // 특정 구간에 대한 성능을 측정할 때 많이 사용된다.
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            ExamBitCoverter();
-            Thread.Sleep(1500);
-
-            sw.Stop();
-            Console.WriteLine("Stopwatch.ElapsedMilliseconds={0}", sw.ElapsedMilliseconds / 1000);
+            ExamRegularExpression();
             Console.ReadKey();
         }
 
         private static void ExamDateTime()
         {
+            Console.WriteLine("###################### DateTime");
             DateTime newDateTime = new DateTime(2020, 06, 27, 10, 0, 0);
             Console.WriteLine("CSharp Study Time={0}", newDateTime);
 
@@ -35,10 +28,29 @@ namespace CSharpStudy.Day20200627
             DateTime utcNow = DateTime.UtcNow;
             Console.WriteLine(now.ToString("yyyy-MM-dd HH:mm:ss"));
 
-            Console.WriteLine("Now.DayOfYear={0}", now.DayOfYear);
+            Console.WriteLine("Now.DayOfYear={0}", now.DayOfYear); 
             Console.WriteLine("Now.DayOfWeek={0}.", now.DayOfWeek);
 
             Console.WriteLine("Now.AddDays(7)={0}", now.AddDays(7));
+
+            DateTime birthTime = new DateTime(1987, 9, 30);
+
+            TimeSpan lifeTime = DateTime.Now.Subtract(birthTime);
+            Console.WriteLine("LifeTime.Days={0}", lifeTime.Days);
+
+            // 9시간 차이
+            Console.WriteLine("DateTime.UtcNow={0}, Kind={1}", utcNow, utcNow.Kind);
+            Console.WriteLine("DateTime.Now={0}, Kind={1}", now, now.Kind);
+            Console.WriteLine("###################### DateTime");
+        }
+
+        private static void ExamTimeSpan()
+        {
+            Console.WriteLine("###################### ExamTimeSpan");
+            TimeSpan gap = new DateTime(DateTime.Now.Year, 12, 31) - DateTime.Now;
+            Console.WriteLine("Gap.TotalDays={0}", (int)gap.TotalDays);
+            Console.WriteLine("Now.DayOfYear + Gap.Totaldays = {0}", DateTime.Now.DayOfYear + (int)gap.TotalDays);
+
             foreach (string fileName in Directory.GetFiles("C:\\Temp1"))
             {
                 FileInfo fi = new FileInfo(fileName);
@@ -46,27 +58,29 @@ namespace CSharpStudy.Day20200627
 
                 // 1초(Second)는 1,000 밀리초(Millisecond)인데 이보다 정밀도가 높은 시간 값이 필요하다면 Ticks 속성을 이용
                 // 1밀리초의 10,000분의 1에 해당하는 정밀도를 가지고 있다.
-                TimeSpan time = new TimeSpan(now.Ticks - fileWriteTime.Ticks);
+                TimeSpan time = new TimeSpan(DateTime.Now.Ticks - fileWriteTime.Ticks);
 
-                if (time.TotalMinutes > 5)
+                if (time.TotalMinutes > 1)
                 {
                     fi.Delete();
                     Console.WriteLine("{0} Delete File.", fi.Name);
                 }
             }
+            Console.WriteLine("###################### ExamTimeSpan");
+        }
 
-            DateTime birthTime = new DateTime(1987, 9, 30);
+        private static void ExamStopwatch()
+        {
+            Console.WriteLine("###################### ExamStopwatch");
+            // 특정 구간에 대한 성능을 측정할 때 많이 사용된다.
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
 
-            TimeSpan lifeTime = now.Subtract(birthTime);
-            Console.WriteLine("LifeTime.Days={0}", lifeTime.Days);
+            Thread.Sleep(1000);
 
-            // 9시간 차이
-            Console.WriteLine("DateTime.UtcNow={0}, Kind={1}", utcNow, utcNow.Kind);
-            Console.WriteLine("DateTime.Now={0}, Kind={1}", now, now.Kind);
-
-            TimeSpan gap = new DateTime(now.Year, 12, 31) - now;
-            Console.WriteLine("Gap.TotalDays={0}", (int)gap.TotalDays);
-            Console.WriteLine("Now.DayOfYear + Gap.Totaldays = {0}", now.DayOfYear + (int)gap.TotalDays);
+            sw.Stop();
+            Console.WriteLine("Stopwatch.ElapsedMilliseconds={0}", sw.ElapsedMilliseconds / 1000);
+            Console.WriteLine("###################### ExamStopwatch");
         }
 
         private static void ExamString()
@@ -81,6 +95,7 @@ namespace CSharpStudy.Day20200627
             // Alpha, Red, Green, Blue
 
             // 8비트 8자리 1,2,4,8,16,32,64,128=255 값으로 ARGB 의 값을 Int 형으로 표현 할 수 있다.
+            // int nTemp =   0xFFFFFFFFF;
             int argb = 0x00FF0000;
             Console.WriteLine("Argb=" + argb);
             // Alapha=00000000, Red=11111111, Green=00000000, Blue=00000000
@@ -108,8 +123,10 @@ namespace CSharpStudy.Day20200627
             string format = "날짜: {0,-20:D}, 판매 수량: {1,15:N}";
             Console.WriteLine(format, DateTime.Now, 267);
             Console.WriteLine("###################### String");
+        }
 
-            Console.WriteLine();
+        private static void ExamStringBuilder()
+        {
             Console.WriteLine("###################### StringBuilder");
             // Capacity는 기존 Capacity 만큼의 문자열이 찰 경우 해당 크기의 두 배로!
             StringBuilder builder = new StringBuilder();
@@ -129,6 +146,7 @@ namespace CSharpStudy.Day20200627
 
         private static void ExamEncoding()
         {
+            Console.WriteLine("###################### ExamEncoding");
             Console.WriteLine("Encoding.Default={0}", Encoding.Default);
             foreach (EncodingInfo encodingInfo in Encoding.GetEncodings())
             {
@@ -136,31 +154,32 @@ namespace CSharpStudy.Day20200627
             }
 
             string json = "{event:\"execute\"}";
+            Console.WriteLine(json);
             string encode = ConvertUtility.Base64Encode(json);
             Console.WriteLine(encode);
             string decode = ConvertUtility.Base64Decode(encode);
             Console.WriteLine(decode);
+            Console.WriteLine("###################### ExamEncoding");
         }
 
         private static void ExamRegularExpression()
         {
+            Console.WriteLine("###################### ExamRegularExpression");
+
             Console.WriteLine("ColorUtility.IsValidCssStyleRgba(\"#336655\")={0}", 
                 ColorUtility.IsValidCssStyleSharpRgba("#336655"));
             Console.WriteLine("ColorUtility.IsValidCssStyleRgba(\"#336655FF\")={0}",
                 ColorUtility.IsValidCssStyleSharpRgba("#336655FF"));
             Console.WriteLine("ColorUtility.IsValidCssStyleRgba(\"#336655FG\")={0}",
                 ColorUtility.IsValidCssStyleSharpRgba("#336655FG"));
+
+            Console.WriteLine("###################### ExamRegularExpression");
         }
 
-        private static void PrintBytes(ref byte[] bytes)
-        {
-            foreach (byte @byte in bytes)
-            {
-                Console.Write(@byte);
-            }
-        }
         private static void ExamBitCoverter()
         {
+            Console.WriteLine("###################### ExamBitCoverter");
+
             // 문자열 또한 byte 데이터이다.
             byte[] bytes = 
                 new byte[] {
@@ -174,26 +193,26 @@ namespace CSharpStudy.Day20200627
             }
             Console.WriteLine("");
 
+            
             Console.WriteLine("BitConverter.IsLittleEndian={0}", BitConverter.IsLittleEndian);
 
             byte[] boolBytes = BitConverter.GetBytes(true);
-            byte[] shortBytes = BitConverter.GetBytes((short)32);
-            byte[] intBytes = BitConverter.GetBytes(32);
+            byte[] shortBytes = BitConverter.GetBytes((short)32000);
+            byte[] intBytes = BitConverter.GetBytes(1652300);
 
-            PrintBytes(ref boolBytes); Console.WriteLine(" BoolBytes={0}", BitConverter.ToString(boolBytes));
-            PrintBytes(ref shortBytes); Console.WriteLine(" ShortBytes={0}", BitConverter.ToString(shortBytes));
-            PrintBytes(ref intBytes); Console.WriteLine(" IntBytes={0}", BitConverter.ToString(intBytes));
-            // 1바이트는 8비트(00000000) 2바이트(00000000 00000000)
+            Console.WriteLine("BoolResult={0}", BitConverter.ToBoolean(boolBytes, 0));
+            Console.WriteLine("ShortResult={0}", BitConverter.ToInt16(shortBytes, 0));
+            Console.WriteLine("IntResult={0}", BitConverter.ToInt32(intBytes, 0));
 
-            Console.WriteLine(Convert.ToString(32, 2));
+            Console.WriteLine("BoolBytes={0}", BitConverter.ToString(boolBytes));
+            Console.WriteLine("LittleEndian ShortBytes={0}, BigEndian=7D-00", BitConverter.ToString(shortBytes)); // 7D 00 <- 빅 엔디안
+            Console.WriteLine("LittleEndian IntBytes={0}, BigEndian=00 19 36 4C", BitConverter.ToString(intBytes)); // 00 19 36 4C
 
-            string value = BitConverter.ToString(intBytes).Replace("-", "");
-            int nTemp = Convert.ToInt32(value, 16);
-            value = Convert.ToString(nTemp, 2);
-            Console.WriteLine("Length={0}, {1}", value.Length, value);
+            byte[] binaryData = new byte[] { 0x4C, 0x36, 0x19, 0x00 };
+            int result = BitConverter.ToInt32(binaryData, 0);
+            Console.WriteLine("Result={0}", result);
 
-            // 소켓 패킷 정의시 데이터에 대한 길이 설정 가능값
-            Console.WriteLine(32000.ToString("D10"));
+            Console.WriteLine("###################### ExamBitCoverter");
         }
     }
 }
