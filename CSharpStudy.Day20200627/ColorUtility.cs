@@ -29,22 +29,22 @@ namespace CSharpStudy.Day20200627
         {
             if (styleRgbaNumber == null)
             {
-                throw new ArgumentNullException("argb");
+                throw new ArgumentNullException("styleRgbaNumber");
             }
 
             if (styleRgbaNumber.Length == 0)
             {
-                throw new ArgumentException("argb.Length is zero");
+                throw new ArgumentException("styleRgbaNumber.Length is zero");
             }
 
             if (!styleRgbaNumber.StartsWith("rgba("))
             {
-                throw new ArgumentException("argb is invalid value, usage is rgba(255,0,0,0)");
+                throw new ArgumentException("styleRgbaNumber is invalid value, usage is rgba(255,0,0,0)");
             }
 
             if (!styleRgbaNumber.EndsWith(")"))
             {
-                throw new ArgumentException("argb is invalid value, usage is rgba(255,0,0,0)");
+                throw new ArgumentException("styleRgbaNumber is invalid value, usage is rgba(255,0,0,0)");
             }
 
             styleRgbaNumber = styleRgbaNumber.Substring(5, styleRgbaNumber.Length - 6);

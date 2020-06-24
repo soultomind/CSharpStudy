@@ -144,11 +144,11 @@ namespace CSharpStudy.Day20200627
 
         private static void ExamRegularExpression()
         {
-            Console.WriteLine("ColorUtility.IsValidCssStyleRgba(\"#336655\")={0}", 
+            Console.WriteLine("ColorUtility.IsValidCssStyleSharpRgba(\"#336655\")={0}", 
                 ColorUtility.IsValidCssStyleSharpRgba("#336655"));
-            Console.WriteLine("ColorUtility.IsValidCssStyleRgba(\"#336655FF\")={0}",
+            Console.WriteLine("ColorUtility.IsValidCssStyleSharpRgba(\"#336655FF\")={0}",
                 ColorUtility.IsValidCssStyleSharpRgba("#336655FF"));
-            Console.WriteLine("ColorUtility.IsValidCssStyleRgba(\"#336655FG\")={0}",
+            Console.WriteLine("ColorUtility.IsValidCssStyleSharpRgba(\"#336655FG\")={0}",
                 ColorUtility.IsValidCssStyleSharpRgba("#336655FG"));
         }
 
