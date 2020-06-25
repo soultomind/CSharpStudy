@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -14,7 +15,7 @@ namespace CSharpStudy.Day20200627
     {
         static void Main(string[] args)
         {
-            ExamRegularExpression();
+            ExamCollections();
             Console.ReadKey();
         }
 
@@ -213,6 +214,164 @@ namespace CSharpStudy.Day20200627
             Console.WriteLine("Result={0}", result);
 
             Console.WriteLine("###################### ExamBitCoverter");
+        }
+
+        private static void ExamCollections()
+        {
+            const int COUNT = 10000000;
+            Stopwatch sw = new Stopwatch();
+            {
+                IList list = new ArrayList(10);
+                Console.WriteLine("List HashCode={0}", list.GetHashCode());
+                Console.WriteLine("ArrayList.Capacity={0}", ((ArrayList)list).Capacity);
+                
+                sw.Start();
+                for (int index = 0; index < COUNT; index++)
+                {
+                    list.Add(index);
+                }
+                sw.Stop();
+                Console.WriteLine("Stopwatch {0},{1}", sw.ElapsedTicks, sw.ElapsedMilliseconds / 1000);
+
+                // Thread Safe ArrayList
+                IList syncList = ArrayList.Synchronized(list);
+                Console.WriteLine("SyncList HashCode={0}", syncList.GetHashCode());
+
+                sw.Reset();
+                sw.Start();
+                for (int index = 0; index < COUNT; index++)
+                {
+                    syncList.Add(index);
+                }
+                sw.Stop();
+                Console.WriteLine("Stopwatch {0},{1}", sw.ElapsedTicks, sw.ElapsedMilliseconds / 1000);
+
+                sw.Reset();
+                sw.Start();
+
+                int nTemp = (int)list[COUNT - 500];
+
+                sw.Stop();
+                Console.WriteLine("Stopwatch {0},{1}", sw.ElapsedTicks, sw.ElapsedMilliseconds / 1000);
+            }
+
+            // System.Collections.Generic
+            {
+                // ICollection
+
+                // 배열 형태
+                List<int> list = new List<int>();
+
+                // 객체 참조 형태 
+                LinkedList<int> linkedList = new LinkedList<int>();
+            }
+
+            {
+                Hashtable hashTable = new Hashtable();
+                for (int index = 0; index < COUNT; index++)
+                {
+                    hashTable.Add(index, index);
+                }
+
+                sw.Reset();
+                int nTemp = (int)hashTable[COUNT - 500];
+                Console.WriteLine("Stopwatch {0},{1}", sw.ElapsedTicks, sw.ElapsedMilliseconds / 1000);
+                sw.Stop();
+
+                // ArgumentException
+                // hashTable.Add(COUNT - 1, COUNT - 1);
+            }
+
+            {
+                SortedList sortedList = new SortedList();
+                sortedList.Add(17, "Sammy");
+                sortedList.Add(27, "Paul");
+                sortedList.Add(32, "Cooper");
+                sortedList.Add(56, "Anderson");
+
+                Console.WriteLine("KeyValues");
+                foreach (int key in sortedList.GetKeyList())
+                {
+                    Console.WriteLine("{0}={1}", key, sortedList[key]);
+                }
+
+                // Generic 형태가 아니라 오류가 발생 하지 않음 
+                Console.WriteLine("Values");
+                foreach (string value in sortedList.GetValueList())
+                {
+                    Console.WriteLine("{0}", value);
+                }
+            }
+
+            {
+                SortedList<int, string> sortedList = new SortedList<int, string>();
+                sortedList.Add(17, "Sammy");
+                sortedList.Add(27, "Paul");
+                sortedList.Add(32, "Cooper");
+                sortedList.Add(56, "Anderson");
+
+                Console.WriteLine("KeyValues");
+                foreach (int key in sortedList.Keys)
+                {
+                    Console.WriteLine("{0}={1}", key, sortedList[key]);
+                }
+
+                // Generic 형태라 오류 발생
+                Console.WriteLine("Values");
+                foreach (string value in sortedList.Values)
+                {
+                    Console.WriteLine("{0}", value);
+                }
+            }
+
+            {
+                Stack<int> stack = new Stack<int>();
+                stack.Push(10);
+                stack.Push(20);
+
+                Console.WriteLine("Stack.Pop={0}", stack.Pop());
+                Console.WriteLine("Stack.Pop={0}", stack.Pop());
+                
+                // InvalidOperationException 발생
+                //Console.WriteLine("Stack.Pop={0}", stack.Pop());
+
+                if (stack.Count > 0)
+                {
+                    Console.WriteLine("Stack.Pop={0}", stack.Pop());
+                }
+                else
+                {
+                    Console.WriteLine("failed Stack.Pop()");
+                }
+
+                stack.Push(10);
+                stack.Push(20);
+                stack.Clear();
+                Console.WriteLine("Stack.Count={0}", stack.Count);
+            }
+
+            {
+                Queue<int> queue = new Queue<int>();
+                queue.Enqueue(1000);
+                queue.Enqueue(1001);
+                queue.Enqueue(1002);
+
+                Console.WriteLine("Queue.Dequeue={0}", queue.Dequeue());
+                Console.WriteLine("Queue.Dequeue={0}", queue.Dequeue());
+
+                if (queue.Count > 0)
+                {
+                    Console.WriteLine("Queue.Dequeue={0}", queue.Dequeue());
+                }
+                else
+                {
+                    Console.WriteLine("failed Queue.Dequeue()");
+                }
+
+                queue.Enqueue(10);
+                queue.Clear();
+                Console.WriteLine("Queue.Count={0}", queue.Count);
+            }
         }
     }
 }
