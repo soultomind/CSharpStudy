@@ -5,9 +5,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace CSharpStudy.Day20200627
 {
@@ -15,7 +18,7 @@ namespace CSharpStudy.Day20200627
     {
         static void Main(string[] args)
         {
-            ExamCollections();
+            ExamDataContractJsonSerializer();
             Console.ReadKey();
         }
 
@@ -216,13 +219,207 @@ namespace CSharpStudy.Day20200627
             Console.WriteLine("###################### ExamBitCoverter");
         }
 
+        private static void ExamMemoryStream()
+        {
+            Console.WriteLine("###################### ExamMemoryStream");
+
+            int nValue = 1652300;
+            Console.WriteLine("Value={0}", nValue);
+            byte[] intBytes = BitConverter.GetBytes(nValue);
+            MemoryStream ms = new MemoryStream();
+            ms.Write(intBytes, 0, intBytes.Length);
+
+            // 저장된 바이트 배열을 읽기 위해서는 처음 부터 읽어야 하기 때문에 포지션에 대한값을 0으로 설정이 필요
+            ms.Position = 0;
+
+            // 자료형에 맞는 바이트수로 할당 필요
+            byte[] intOutBytes = new byte[4];
+            ms.Read(intOutBytes, 0, intOutBytes.Length);
+            int intResult = BitConverter.ToInt32(intOutBytes, 0);
+            if (nValue == intResult)
+            {
+                Console.WriteLine("IntResult={0}", intResult);
+            }
+
+            string strValue = "C#";
+            Console.WriteLine("value={0}", strValue);
+            byte[] strBytes = Encoding.UTF8.GetBytes(strValue);
+            ms.Write(strBytes, 0, strBytes.Length);
+
+            byte[] strOutBytes = new byte[strBytes.Length];
+            ms.Position = intOutBytes.Length;
+            ms.Read(strOutBytes, 0, strBytes.Length);
+            string strResult = Encoding.UTF8.GetString(strOutBytes);
+            Console.WriteLine("StrResult={0}", strResult);
+
+            byte[] buffer = ms.ToArray();
+            intResult = BitConverter.ToInt32(buffer, 0);
+            Console.WriteLine("IntResult={0}", intResult);
+
+            // - 구분자로 16진수 43-23 -> 10진수 67-35
+            strResult = BitConverter.ToString(buffer, 4);
+
+            //strResult = Convert.ToString(buffer[4]);
+            //strResult += Convert.ToString(buffer[5]);
+            Console.WriteLine("StrResult={0}", strResult);
+
+            Console.WriteLine("###################### ExamMemoryStream");
+        }
+
+        private static void ExamStreamWriterAndReader()
+        {
+            Console.WriteLine("###################### ExamStreamWriterAndReader");
+
+            try
+            {
+                using (MemoryStream ms = new MemoryStream())
+                using (StreamWriter sw = new StreamWriter(ms, Encoding.UTF8))
+                {
+                    //byte[] buffer = Encoding.UTF8.GetBytes("Hello, World!");
+                    //ms.Write(buffer, 0, buffer.Length);
+
+                    sw.WriteLine("Hello, World!");
+                    sw.WriteLine("Anderson");
+                    sw.Write(32000);
+                    sw.Flush();
+                    ms.Position = 0;
+
+                    StreamReader sr = new StreamReader(ms);
+                    string data = sr.ReadToEnd();
+                    Console.WriteLine("Data={0}", data);
+
+                    sr.Dispose();
+                }
+
+                using (StreamReader sr = new StreamReader("Config.json", Encoding.UTF8))
+                {
+                    string data = sr.ReadToEnd();
+                    Console.WriteLine("Config.json={0}", data);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+
+            Console.WriteLine("###################### ExamStreamWriterAndReader");
+        }
+
+        private static void ExamBinaryWriterAndReader()
+        {
+            Console.WriteLine("###################### ExamBinaryWriterAndReader");
+            try
+            {
+                using (MemoryStream ms = new MemoryStream())
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write("Hello World" + Environment.NewLine);
+                    bw.Write("Anderson" + Environment.NewLine);
+                    bw.Write(32000);
+                    bw.Flush();
+
+                    ms.Position = 0;
+
+                    // 2진파일 중간에 잘못된 데이터가 써질경우 그 이후의 데이터는 손실된다.
+
+                    BinaryReader br = new BinaryReader(ms);
+                    string value1 = br.ReadString();
+                    string value2 = br.ReadString();
+                    int value3 = br.ReadInt32();
+                    Console.WriteLine("{0}{1}{2}", value1, value2, value3);
+                    br.Dispose();
+                    br.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+            Console.WriteLine("###################### ExamBinaryWriterAndReader");
+        }
+
+        private static void ExamBinaryFormatter()
+        {
+            Console.WriteLine("###################### ExamBinaryFormatter");
+
+            Study study = new Study("C# Study", "강남");
+
+            BinaryFormatter bf = new BinaryFormatter();
+
+            MemoryStream ms = new MemoryStream();
+            bf.Serialize(ms, study);
+
+            ms.Position = 0;
+
+            Study clone = bf.Deserialize(ms) as Study;
+
+            ms.Dispose();
+            ms.Close();
+            
+
+            Console.WriteLine("Clone={0}", clone);
+
+            Console.WriteLine("###################### ExamBinaryFormatter");
+        }
+
+        private static void ExamXmlSerializer()
+        {
+            Console.WriteLine("###################### ExamXmlSerializer");
+
+            Person person = new Person("이바우", 25);
+
+            MemoryStream ms = new MemoryStream();
+
+            XmlSerializer xs = new XmlSerializer(typeof(Person));
+            xs.Serialize(ms, person);
+
+            ms.Position = 0;
+
+            Person clone = xs.Deserialize(ms) as Person;
+
+            ms.Dispose();
+            ms.Close();
+
+            Console.WriteLine("Clone={0}", clone);
+
+            string xml = Encoding.UTF8.GetString(ms.ToArray());
+            Console.WriteLine("Xml={0}", xml);
+
+
+
+            Console.WriteLine("###################### ExamXmlSerializer");
+        }
+
+        private static void ExamDataContractJsonSerializer()
+        {
+            Console.WriteLine("###################### ExamDataContractJsonSerializer");
+
+            Person person = new Person("이바우", 25);
+
+            MemoryStream ms = new MemoryStream();
+
+            DataContractJsonSerializer dcjs = new DataContractJsonSerializer(typeof(Person));
+            dcjs.WriteObject(ms, person);
+
+            ms.Position = 0;
+
+            Person clone = dcjs.ReadObject(ms) as Person;
+
+            Console.WriteLine("Clone={0}", clone);
+
+            ms.Dispose();
+            ms.Close();
+
+            Console.WriteLine("###################### ExamDataContractJsonSerializer");
+        }
+
         private static void ExamCollections()
         {
             const int COUNT = 10000000;
             Stopwatch sw = new Stopwatch();
             {
                 IList list = new ArrayList(10);
-                Console.WriteLine("List HashCode={0}", list.GetHashCode());
+                Console.WriteLine("List Type={0} HashCode={1}", list.GetType(), list.GetHashCode());
                 Console.WriteLine("ArrayList.Capacity={0}", ((ArrayList)list).Capacity);
                 
                 sw.Start();
@@ -235,7 +432,7 @@ namespace CSharpStudy.Day20200627
 
                 // Thread Safe ArrayList
                 IList syncList = ArrayList.Synchronized(list);
-                Console.WriteLine("SyncList HashCode={0}", syncList.GetHashCode());
+                Console.WriteLine("SyncList Type={0} HashCode={1}", syncList.GetType(), syncList.GetHashCode());
 
                 sw.Reset();
                 sw.Start();
@@ -261,7 +458,7 @@ namespace CSharpStudy.Day20200627
 
                 // 배열 형태
                 List<int> list = new List<int>();
-
+                
                 // 객체 참조 형태 
                 LinkedList<int> linkedList = new LinkedList<int>();
             }
