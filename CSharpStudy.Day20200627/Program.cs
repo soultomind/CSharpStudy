@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -18,7 +19,7 @@ namespace CSharpStudy.Day20200627
     {
         static void Main(string[] args)
         {
-            ExamDataContractJsonSerializer();
+            ExamCollections();
             Console.ReadKey();
         }
 
@@ -83,6 +84,7 @@ namespace CSharpStudy.Day20200627
             Thread.Sleep(1000);
 
             sw.Stop();
+
             Console.WriteLine("Stopwatch.ElapsedMilliseconds={0}", sw.ElapsedMilliseconds / 1000);
             Console.WriteLine("###################### ExamStopwatch");
         }
@@ -100,7 +102,11 @@ namespace CSharpStudy.Day20200627
 
             // 8비트 8자리 1,2,4,8,16,32,64,128=255 값으로 ARGB 의 값을 Int 형으로 표현 할 수 있다.
             // int nTemp =   0xFFFFFFFFF;
-            int argb = 0x00FF0000;
+            
+            // 11111111 00000000 00000000 00000000
+            // 00000000 00000000 00000000 11111111
+
+            int argb = 0x00FF0000; 
             Console.WriteLine("Argb=" + argb);
             // Alapha=00000000, Red=11111111, Green=00000000, Blue=00000000
 
@@ -124,6 +130,17 @@ namespace CSharpStudy.Day20200627
             string message = String.Format("{0} {1}", "C#", "Study");
             Console.WriteLine(message);
 
+            string text = "text";
+            if (text == "text")
+            {
+                Console.WriteLine("==");
+            }
+
+            if (text.Equals("TEXT", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine("Equals");
+            }
+
             string format = "날짜: {0,-20:D}, 판매 수량: {1,15:N}";
             Console.WriteLine(format, DateTime.Now, 267);
             Console.WriteLine("###################### String");
@@ -132,6 +149,7 @@ namespace CSharpStudy.Day20200627
         private static void ExamStringBuilder()
         {
             Console.WriteLine("###################### StringBuilder");
+
             // Capacity는 기존 Capacity 만큼의 문자열이 찰 경우 해당 크기의 두 배로!
             StringBuilder builder = new StringBuilder();
             Console.WriteLine("Capacity={0}", builder.MaxCapacity);
@@ -176,6 +194,14 @@ namespace CSharpStudy.Day20200627
                 ColorUtility.IsValidCssStyleSharpRgba("#336655FF"));
             Console.WriteLine("ColorUtility.IsValidCssStyleRgba(\"#336655FG\")={0}",
                 ColorUtility.IsValidCssStyleSharpRgba("#336655FG"));
+
+            string text = "Hello, World! Welcome to my world";
+            Regex regex = new Regex("World", RegexOptions.IgnoreCase);
+            string result = regex.Replace(text, new MatchEvaluator((match)=>
+            {
+                return "Universe";
+            }));
+            Console.WriteLine("Result={0}", result);
 
             Console.WriteLine("###################### ExamRegularExpression");
         }

@@ -19,6 +19,7 @@ namespace CSharpStudy.Day20200627
             return Color.FromArgb(alapha, red, green, blue); ;
         }
 
+        
         public static bool IsValidCssStyleSharpRgba(string styleSharpRgba)
         {
             Regex regex = new Regex("#[0-9A-Fa-f]{8}");
