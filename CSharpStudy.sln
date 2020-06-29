@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpStudy.Day20200627", "CSharpStudy.Day20200627\CSharpStudy.Day20200627.csproj", "{5E43781D-5B96-44D7-AD8A-B38163F3F789}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpStudy.Day20200704", "CSharpStudy.Day20200704\CSharpStudy.Day20200704.csproj", "{05EFC96C-BC2B-4444-8C6D-284BDEDCB5CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpStudy.Toolkit", "CSharpStudy.Toolkit\CSharpStudy.Toolkit.csproj", "{60F2978B-EBBD-4414-81C3-66E9360B9C3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +30,14 @@ Global
 		{5E43781D-5B96-44D7-AD8A-B38163F3F789}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E43781D-5B96-44D7-AD8A-B38163F3F789}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E43781D-5B96-44D7-AD8A-B38163F3F789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05EFC96C-BC2B-4444-8C6D-284BDEDCB5CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05EFC96C-BC2B-4444-8C6D-284BDEDCB5CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05EFC96C-BC2B-4444-8C6D-284BDEDCB5CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05EFC96C-BC2B-4444-8C6D-284BDEDCB5CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60F2978B-EBBD-4414-81C3-66E9360B9C3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60F2978B-EBBD-4414-81C3-66E9360B9C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60F2978B-EBBD-4414-81C3-66E9360B9C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60F2978B-EBBD-4414-81C3-66E9360B9C3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
