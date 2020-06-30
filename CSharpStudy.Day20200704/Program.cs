@@ -21,7 +21,7 @@ namespace CSharpStudy.Day20200704
             //Directory.SetCurrentDirectory(currentDirectory);
             //Environment.CurrentDirectory = currentDirectory;
 
-            ExamDirectoryAndDirectoryInfo();
+            ExamThread();
             Console.ReadKey();
         }
 
@@ -219,7 +219,51 @@ namespace CSharpStudy.Day20200704
                 Console.WriteLine("{0} 파일이 삭제 되었습니다.", path);
             }
 
+            string targetPath = @"C:\Windows\Microsoft.NET\Framework";
+            Console.WriteLine("Directory.GetFiles({0}, \"*.exe\", SearchOption.AllDirectories)", targetPath);
+            // 해당 디렉터리 안에 있는 디렉터리 까지 모두 찾음
+            foreach (string path in Directory.GetFiles(targetPath, "*.exe", SearchOption.AllDirectories))
+            {
+                Console.WriteLine(path);
+            }
+
+            Console.WriteLine("Directory.GetDirectories({0})", targetPath);
+            foreach (string path in Directory.GetDirectories(targetPath))
+            {
+                Console.WriteLine(path);
+            }
+
             Console.WriteLine("##################################### ExamFileAndFIleInfo");
+        }
+
+        private static void ExamPath()
+        {
+            Console.WriteLine("##################################### ExamPath");
+
+            string currentDirectory = Environment.CurrentDirectory;
+            string path = currentDirectory + Path.DirectorySeparatorChar + "Change.log";
+            using (FileStream fs = File.Create(path))
+            {
+
+            }
+
+            string changePath = Path.ChangeExtension(path, ".txt");
+            Console.WriteLine("Path.ChangeExtension({0}, \".txt\")", path);
+            Console.WriteLine(changePath);
+
+            Console.WriteLine(Path.GetDirectoryName(changePath));
+            Console.WriteLine(Path.GetDirectoryName(currentDirectory));
+
+            Console.WriteLine("Path.GetPathRoot(\"D:\\Temp\\1\\\")={0}", Path.GetPathRoot("D:\\Temp\\1\\"));
+            Console.WriteLine("Path.GetRandomFileName={0}", Path.GetRandomFileName());
+            Console.WriteLine("Path.GetFileNameWithoutExtension(changePath)={0}", Path.GetFileNameWithoutExtension(changePath));
+            Console.WriteLine("Path.GetExtension(changePath)={0}", Path.GetExtension(changePath));
+            Console.WriteLine("##################################### ExamPath");
+        }
+
+        private static void ExamThread()
+        {
+
         }
     }
 }
