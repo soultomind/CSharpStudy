@@ -12,7 +12,8 @@ namespace CSharpStudy.Toolkit
     {
         static void Main(string[] args)
         {
-            ProcessStart(@"C:\Workspace\DotNet\GitProject\CSharpStudy\CSharpStudy.Day20200704\bin\Debug\CSharpStudy.Day20200704.exe");
+            //ProcessStart(@"C:\Workspace\DotNet\GitProject\CSharpStudy\CSharpStudy.Day20200704\bin\Debug\CSharpStudy.Day20200704.exe");
+            ProcessStart(@"C:\Users\SoulToMind\Desktop\CSharpStudy\CSharpStudy.Day20200704\bin\Debug\CSharpStudy.Day20200704.exe");
         }
 
         private static void ProcessStart(string fileName)
